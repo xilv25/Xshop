@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kostumisasi Undangan</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Kostumisasi Undangan</h1>
+  </header>
+
+  <main>
+    <form id="formKostum">
+      <label>Pilih Font:</label>
+      <select name="font" required>
+        <option value="">-- Pilih Font --</option>
+        <option value="serif">Serif Elegan</option>
+        <option value="sans-serif">Sans Modern</option>
+        <option value="cursive">Cursive Romantis</option>
+      </select>
+
+      <label>Warna Tema:</label>
+      <input type="color" name="warna" value="#ffb6c1" required />
+
+      <label>Musik Latar:</label>
+      <select name="musik">
+        <option value="">-- Pilih Musik --</option>
+        <option value="romantic.mp3">Romantic</option>
+        <option value="classic.mp3">Classic</option>
+        <option value="instrumental.mp3">Instrumental</option>
+      </select>
+
+      <label>Catatan Tambahan (opsional):</label>
+      <textarea name="catatan"></textarea>
+
+      <button type="submit">Lanjut Pembayaran</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Toko Undangan Online</p>
+  </footer>
+
+  <script>
+    // Ambil data form sebelumnya
+    const prevData = JSON.parse(localStorage.getItem('dataUndangan')) || {};
+
+    document.getElementById('formKostum').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const kostumData = new FormData(this);
+      const kostum = Object.fromEntries(kostumData.entries());
+
+      const finalData = { ...prevData, ...kostum };
+      localStorage.setItem('finalData', JSON.stringify(finalData));
+
+      // Arahkan ke halaman pembayaran
+      window.location.href = 'pembayaran.html';
+    });
+  </script>
+</body>
+</html>
