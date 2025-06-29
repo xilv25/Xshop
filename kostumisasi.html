@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -7,10 +8,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>Kostumisasi Undangan</h1>
-  </header>
-
+  <header><h1>Kostumisasi Undangan</h1></header>
   <main>
     <form id="formKostum">
       <label>Pilih Font:</label>
@@ -20,10 +18,8 @@
         <option value="sans-serif">Sans Modern</option>
         <option value="cursive">Cursive Romantis</option>
       </select>
-
       <label>Warna Tema:</label>
       <input type="color" name="warna" value="#ffb6c1" required />
-
       <label>Musik Latar:</label>
       <select name="musik">
         <option value="">-- Pilih Musik --</option>
@@ -31,31 +27,20 @@
         <option value="classic.mp3">Classic</option>
         <option value="instrumental.mp3">Instrumental</option>
       </select>
-
-      <label>Catatan Tambahan (opsional):</label>
+      <label>Catatan Tambahan:</label>
       <textarea name="catatan"></textarea>
-
       <button type="submit">Lanjut Pembayaran</button>
     </form>
   </main>
-
-  <footer>
-    <p>&copy; 2025 Toko Undangan Online</p>
-  </footer>
-
+  <footer><p>&copy; 2025 Toko Undangan Online</p></footer>
   <script>
-    // Ambil data form sebelumnya
     const prevData = JSON.parse(localStorage.getItem('dataUndangan')) || {};
-
-    document.getElementById('formKostum').addEventListener('submit', async function(e) {
+    document.getElementById('formKostum').addEventListener('submit', function(e) {
       e.preventDefault();
       const kostumData = new FormData(this);
       const kostum = Object.fromEntries(kostumData.entries());
-
       const finalData = { ...prevData, ...kostum };
       localStorage.setItem('finalData', JSON.stringify(finalData));
-
-      // Arahkan ke halaman pembayaran
       window.location.href = 'pembayaran.html';
     });
   </script>

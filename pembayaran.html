@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -7,56 +8,31 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>Pembayaran Undangan</h1>
-  </header>
-
+  <header><h1>Pembayaran Undangan</h1></header>
   <main>
     <section id="ringkasan"></section>
-
     <h3>Silakan Transfer ke:</h3>
     <p><strong>Bank:</strong> BCA</p>
     <p><strong>Nama:</strong> RIKZ</p>
-    <p><strong>No. Rekening:</strong> 1234567890</p>
-
+    <p><strong>No. Rekening:</strong> 8243049952</p>
     <form id="konfirmasiForm">
       <label>Nama Pengirim:</label>
       <input type="text" name="pengirim" required />
-
-      <label>Bukti Transfer (URL gambar sementara):</label>
+      <label>Bukti Transfer (URL gambar):</label>
       <input type="url" name="bukti" required />
-
       <button type="submit">Konfirmasi Pembayaran</button>
     </form>
   </main>
-
-  <footer>
-    <p>&copy; 2025 Toko Undangan Online</p>
-  </footer>
-
+  <footer><p>&copy; 2025 Toko Undangan Online</p></footer>
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
-
-    const supabaseUrl = 'https://YOUR_PROJECT_ID.supabase.co'
-    const supabaseKey = 'YOUR_ANON_KEY'
-    const supabase = createClient(supabaseUrl, supabaseKey)
-
+    const supabase = createClient('https://spdglswjjxaebatphudw.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNwZGdsc3dqanhhZWJhdHBodWR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEyMDYzNzAsImV4cCI6MjA2Njc4MjM3MH0.MoPMviSJBHmlbAIlNFMDCYYVEbD7c_SAR8BoF2rPDmA')
     const data = JSON.parse(localStorage.getItem('finalData'))
     const ringkasan = document.getElementById('ringkasan')
-
-    // Tentukan harga berdasar template
-    const hargaMap = {
-      '1': 20000,
-      '2': 50000,
-      '3': 100000,
-      '': 15000 // jika user tidak pilih template
-    }
-
+    const hargaMap = { '1': 20000, '2': 50000, '3': 100000, '': 15000 }
     const harga = hargaMap[data.template || ''] || 15000
     data.harga = harga
-
-    ringkasan.innerHTML = `
-      <h2>Ringkasan Pemesanan</h2>
+    ringkasan.innerHTML = `<h2>Ringkasan Pemesanan</h2>
       <p>Nama Mempelai: ${data.pria} & ${data.wanita}</p>
       <p>Tanggal: ${data.tanggal}</p>
       <p>Waktu: ${data.waktu}</p>
@@ -65,26 +41,17 @@
       <p>Font: ${data.font}</p>
       <p>Warna: ${data.warna}</p>
       <p>Musik: ${data.musik}</p>
-      <p><strong>Total Bayar: Rp ${harga.toLocaleString()}</strong></p>
-    `
-
+      <p><strong>Total Bayar: Rp ${harga.toLocaleString()}</strong></p>`
     document.getElementById('konfirmasiForm').addEventListener('submit', async (e) => {
       e.preventDefault()
       const formData = new FormData(e.target)
       const konfirmasi = Object.fromEntries(formData.entries())
-
       const { error } = await supabase.from('undangan_online').insert({
-        ...data,
-        status_pembayaran: 'menunggu_konfirmasi',
-        bukti_transfer: konfirmasi.bukti,
-        pengirim: konfirmasi.pengirim
+        ...data, status_pembayaran: 'menunggu_konfirmasi',
+        bukti_transfer: konfirmasi.bukti, pengirim: konfirmasi.pengirim
       })
-
-      if (error) {
-        alert('Gagal simpan ke database.')
-        console.error(error)
-      } else {
-        alert('Konfirmasi berhasil dikirim! Admin akan memproses undangan kamu.')
+      if (error) alert('Gagal simpan ke database.'); else {
+        alert('Konfirmasi berhasil!');
         localStorage.clear()
         window.location.href = 'selesai.html'
       }
