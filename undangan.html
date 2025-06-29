@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Undangan</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Isi Formulir Undangan</h1>
+  </header>
+
+  <main>
+    <form id="formUndangan">
+      <label>Nama Mempelai Pria:</label>
+      <input type="text" name="pria" required />
+
+      <label>Nama Mempelai Wanita:</label>
+      <input type="text" name="wanita" required />
+
+      <label>Tanggal Acara:</label>
+      <input type="date" name="tanggal" required />
+
+      <label>Waktu Acara:</label>
+      <input type="time" name="waktu" required />
+
+      <label>Lokasi Acara:</label>
+      <input type="text" name="lokasi" required />
+
+      <label>Link Google Maps:</label>
+      <input type="url" name="maps" required />
+
+      <label>Pilih Template (Opsional):</label>
+      <select name="template">
+        <option value="">--- Pilih Template ---</option>
+        <option value="1">Simple Elegan</option>
+        <option value="2">Romantic Garden</option>
+        <option value="3">Luxury Gold</option>
+      </select>
+
+      <button type="submit">Lanjut Kostumisasi</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Toko Undangan Online</p>
+  </footer>
+
+  <script>
+    document.getElementById('formUndangan').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Simpan data form ke localStorage atau nanti Supabase
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+      localStorage.setItem('dataUndangan', JSON.stringify(data));
+
+      // Arahkan ke halaman kostumisasi
+      window.location.href = 'kostumisasi.html';
+    });
+  </script>
+</body>
+</html>
